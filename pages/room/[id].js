@@ -5,6 +5,7 @@ import axios from "axios";
 import {Carousel} from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
+import Layout from "../components/layout/Layout";
 
 const BACKEND_URL = process.env.BACKEND_URL;
 
@@ -14,7 +15,7 @@ const Details = ({room}) => {
     const {id} = router.query;
 
     return (
-        <>
+        <Layout>
             <Head>
                 <title>Room details</title>
             </Head>
@@ -142,7 +143,7 @@ const Details = ({room}) => {
                     </div>
                 </div>
             </div>
-        </>
+        </Layout>
     )
 }
 
