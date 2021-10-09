@@ -1,57 +1,55 @@
 import Layout from "./components/layout/Layout";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import Link from 'next/link';
 import ButtonLoader from "./components/ButtonLoader";
 import Head from "next/head";
-import {signIn} from 'next-auth/client';
 import {toast} from 'react-toastify';
+import {loginUser} from "../store/actions/userActions";
+import {useDispatch, useSelector} from "react-redux";
+import {clearErrors} from "../store/actions/bookingActions";
+import {useRouter} from "next/router";
 
 const Login = () => {
 
+    const dispatch = useDispatch();
+    const router = useRouter();
+
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [loading, setLoading] = useState(false);
+    // const [loading, setLoading] = useState(false);
+
+    const { success, error, loading } = useSelector(state => state.auth);
+
+    useEffect(() => {
+
+        if (success) {
+            router.push('/');
+        }
+
+        if (error) {
+            toast.error(error);
+            dispatch(clearErrors());
+        }
+
+    }, [dispatch, success, error])
 
     const submitHandler = async (e) => {
         e.preventDefault();
 
-        setLoading(true);
+        // setLoading(true);
 
         const body = JSON.stringify({
             username,
             password
         });
 
-        const res = await fetch('/api/account/login', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: body
-        });
+        dispatch(loginUser(body));
 
-        const result = await res.json();
-
-        setLoading(false);
-        if (result.status === 200) {
-            window.location.href = '/'
-        } else {
-            toast.error(result.message);
-        }
-
-        // const result = await signIn('credentials', {
-        //     redirect: false,
-        //     username,
-        //     password
-        // })
-        //
-        // setLoading(false)
-        //
-        // if (result.error) {
-        //     toast.error(result.error);
-        // } else {
+        // setLoading(false);
+        // if (result.status === 200) {
         //     window.location.href = '/'
+        // } else {
+        //     toast.error(result.message);
         // }
     }
 

@@ -8,12 +8,12 @@ export default async (req, res) => {
 
         if (access === false) {
             return res.status(401).json({
-                error: 'User unauthorized to make this request'
+                error: 'User is unauthorized to make this request'
             });
         }
 
         try {
-            const apiRes = await fetch(`${BACKEND_URL}/account/user`, {
+            const apiRes = await fetch(`${BACKEND_URL}/me/`, {
                 method: 'GET',
                 headers: {
                     'Accept': 'application/json',
@@ -24,7 +24,7 @@ export default async (req, res) => {
 
             if (apiRes.status === 200) {
                 return res.status(200).json({
-                    user: data.user
+                    user: data
                 });
             } else {
                 return res.status(apiRes.status).json({

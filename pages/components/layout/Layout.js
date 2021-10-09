@@ -20,7 +20,6 @@ const Layout = ({children, title = 'Book Best Hotels for your Holiday'}) => {
             <ToastContainer position="bottom-right"/>
             {children}
             <Footer/>
-
         </div>
     )
 }
