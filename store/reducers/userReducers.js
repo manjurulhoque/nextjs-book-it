@@ -30,7 +30,13 @@ import {
     DELETE_USER_RESET,
     DELETE_USER_FAIL,
 
-    CLEAR_ERRORS, LOGIN_USER_REQUEST, LOGIN_USER_SUCCESS, LOGIN_USER_FAIL
+    CLEAR_ERRORS,
+    LOGIN_USER_REQUEST,
+    LOGIN_USER_SUCCESS,
+    LOGIN_USER_FAIL,
+    LOGOUT_USER_REQUEST,
+    LOGOUT_USER_SUCCESS,
+    LOGOUT_USER_FAIL
 
 } from '../constants/userConstants'
 
@@ -68,6 +74,23 @@ export const authReducer = (state = { user: null }, action) => {
             }
 
         case LOGIN_USER_FAIL:
+            return {
+                loading: false,
+                error: action.payload
+            }
+
+        case LOGOUT_USER_REQUEST:
+            return {
+                loading: true
+            }
+
+        case LOGOUT_USER_SUCCESS:
+            return {
+                loading: false,
+                success: true,
+            }
+
+        case LOGOUT_USER_FAIL:
             return {
                 loading: false,
                 error: action.payload

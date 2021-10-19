@@ -4,6 +4,7 @@ import {useRouter} from "next/router";
 import {useState} from "react";
 import {registerUser} from "../store/actions/userActions";
 import ButtonLoader from "./components/ButtonLoader";
+import {AlertMessage} from "../components/errors/AlertMessage";
 
 const Register = () => {
 
@@ -27,7 +28,7 @@ const Register = () => {
             username, email, password
         }
 
-        dispatch(registerUser(userData))
+        dispatch(registerUser(userData));
 
     }
 
@@ -40,6 +41,8 @@ const Register = () => {
             <div className="container container-fluid">
                 <div className="row wrapper">
                     <div className="col-10 col-lg-5">
+                        {error && <AlertMessage type="warning" message={error}/>}
+                        {success && <AlertMessage type="success" message={success}/>}
                         <form className="shadow-lg" onSubmit={submitHandler}>
                             <h1 className="mb-3">Register</h1>
 

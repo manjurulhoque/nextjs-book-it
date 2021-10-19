@@ -30,7 +30,7 @@ import {
     DELETE_USER_RESET,
     DELETE_USER_FAIL,
 
-    CLEAR_ERRORS, LOGIN_USER_REQUEST, LOGIN_USER_SUCCESS, LOGIN_USER_FAIL
+    CLEAR_ERRORS, LOGIN_USER_REQUEST, LOGIN_USER_SUCCESS, LOGIN_USER_FAIL, LOGOUT_USER_REQUEST, LOGOUT_USER_SUCCESS
 
 } from '../constants/userConstants'
 
@@ -78,6 +78,33 @@ export const loginUser = (userData) => async (dispatch) => {
         dispatch({
             type: LOGIN_USER_SUCCESS,
             payload: data.user
+        })
+
+    } catch (error) {
+
+        dispatch({
+            type: LOGIN_USER_FAIL,
+            payload: error.response.data.message
+        })
+    }
+}
+
+// Logout user
+export const logoutUser = () => async (dispatch) => {
+    try {
+
+        dispatch({ type: LOGOUT_USER_REQUEST });
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+
+        const { data } = await axios.post('/api/account/logout', {}, config)
+
+        dispatch({
+            type: LOGOUT_USER_SUCCESS,
         })
 
     } catch (error) {

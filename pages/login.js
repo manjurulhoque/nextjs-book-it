@@ -8,6 +8,7 @@ import {loginUser} from "../store/actions/userActions";
 import {useDispatch, useSelector} from "react-redux";
 import {clearErrors} from "../store/actions/bookingActions";
 import {useRouter} from "next/router";
+import {AlertMessage} from "../components/errors/AlertMessage";
 
 const Login = () => {
 
@@ -61,6 +62,8 @@ const Login = () => {
             <div className="container container-fluid">
                 <div className="row wrapper">
                     <div className="col-10 col-lg-5">
+                        {error && <AlertMessage type="warning" message={error}/>}
+                        {success && <AlertMessage type="success" message={success}/>}
                         <form className="shadow-lg" onSubmit={submitHandler}>
                             <h1 className="mb-3">Login</h1>
                             <div className="form-group">

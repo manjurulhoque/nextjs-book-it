@@ -1,19 +1,36 @@
 import React, {useEffect} from 'react'
 import Link from 'next/link'
 import {useDispatch, useSelector} from "react-redux";
-import {loadUser} from "../../../store/actions/userActions";
+import {loadUser, logoutUser} from "../../../store/actions/userActions";
+import {useRouter} from "next/router";
 
 
 const Header = () => {
 
+    const router = useRouter();
     const dispatch = useDispatch();
     const {user, loading, isAuthenticated} = useSelector(state => state.loadedUser);
+    const { success, error } = useSelector(state => state.auth);
 
     useEffect(() => {
         if (!user) {
             dispatch(loadUser());
         }
-    }, [dispatch, user])
+    }, [dispatch, user]);
+
+    // useEffect(() => {
+    //     if (success) router.push('/login');
+    // }, [success]);
+
+    const logoutHandler = () => {
+        if (dispatch) {
+            dispatch(logoutUser());
+            setTimeout(() => {
+                if (success && typeof window !== 'undefined') window.location.href = "/login";
+            }, 1000);
+        }
+
+    };
 
     return (
         <nav className="navbar row justify-content-center sticky-top">
@@ -70,9 +87,11 @@ const Header = () => {
                                         <a className="dropdown-item">My Bookings</a>
                                     </Link>
 
-                                    <Link href='/'>
-                                        <a className="dropdown-item text-danger">Logout</a>
-                                    </Link>
+                                    <a className="dropdown-item text-danger"
+                                       href='#!'
+                                       onClick={logoutHandler}>
+                                        Logout
+                                    </a>
 
                                 </div>
 
