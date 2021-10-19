@@ -3,6 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {useRouter} from "next/router";
 import {useState} from "react";
 import {registerUser} from "../store/actions/userActions";
+import ButtonLoader from "./components/ButtonLoader";
 
 const Register = () => {
 
@@ -82,7 +83,7 @@ const Register = () => {
                                 id="login_button"
                                 type="submit"
                                 className="btn btn-block py-3"
-                                disabled={loading ? true : false}
+                                disabled={!!loading}
                             >
                                 {loading ? <ButtonLoader/> : 'REGISTER'}
                             </button>
