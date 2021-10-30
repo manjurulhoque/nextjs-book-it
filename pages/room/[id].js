@@ -6,13 +6,24 @@ import {Carousel} from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import Layout from "../components/layout/Layout";
+import {useEffect, useState} from "react";
+import {useDispatch} from "react-redux";
 
 const BACKEND_URL = process.env.BACKEND_URL;
 
 const Details = ({room}) => {
 
+    const [checkInDate, setCheckInDate] = useState();
+    const [checkOutDate, setCheckOutDate] = useState();
+    const [daysOfStay, setDaysOfStay] = useState();
+
+    const dispatch = useDispatch();
     const router = useRouter();
     const {id} = router.query;
+
+    useEffect(() => {
+
+    }, [dispatch, id]);
 
     return (
         <Layout>
@@ -56,12 +67,12 @@ const Details = ({room}) => {
                             <h3 className='mb-4'>Features:</h3>
                             <div className='room-feature'>
                                 <i className="fa fa-cog fa-fw fa-users" aria-hidden="true"/>
-                                <p>{room.guestCapacity} Guests</p>
+                                <p>{room.guest_capacity} Guests</p>
                             </div>
 
                             <div className='room-feature'>
                                 <i className="fa fa-cog fa-fw fa-bed" aria-hidden="true"/>
-                                <p>{room.numOfBeds} Beds</p>
+                                <p>{room.beds} Beds</p>
                             </div>
 
                             <div className='room-feature'>
@@ -80,21 +91,21 @@ const Details = ({room}) => {
 
                             <div className='room-feature'>
                                 <i
-                                    className={room.airConditioned ? 'fa fa-check text-success' : 'fa fa-times text-danger'}
+                                    className={room.air_conditioned ? 'fa fa-check text-success' : 'fa fa-times text-danger'}
                                     aria-hidden="true"/>
                                 <p>Air Conditioned</p>
                             </div>
 
                             <div className='room-feature'>
                                 <i
-                                    className={room.petsAllowed ? 'fa fa-check text-success' : 'fa fa-times text-danger'}
+                                    className={room.pets_allowed ? 'fa fa-check text-success' : 'fa fa-times text-danger'}
                                     aria-hidden="true"/>
                                 <p>Pets Allowed</p>
                             </div>
 
                             <div className='room-feature'>
                                 <i
-                                    className={room.roomCleaning ? 'fa fa-check text-success' : 'fa fa-times text-danger'}
+                                    className={room.room_cleaning ? 'fa fa-check text-success' : 'fa fa-times text-danger'}
                                     aria-hidden="true"/>
                                 <p>Room Cleaning</p>
                             </div>
@@ -113,17 +124,15 @@ const Details = ({room}) => {
                                 Pick Check In & Check Out Date
                             </p>
 
-                            {/*<DatePicker*/}
-                            {/*    className='w-100'*/}
-                            {/*    selected={checkInDate}*/}
-                            {/*    onChange={onChange}*/}
-                            {/*    startDate={checkInDate}*/}
-                            {/*    endDate={checkOutDate}*/}
-                            {/*    minDate={new Date()}*/}
-                            {/*    excludeDates={excludedDates}*/}
-                            {/*    selectsRange*/}
-                            {/*    inline*/}
-                            {/*/>*/}
+                            <DatePicker
+                                className='w-100'
+                                selected={checkInDate}
+                                startDate={checkInDate}
+                                endDate={checkOutDate}
+                                minDate={new Date()}
+                                selectsRange
+                                inline
+                            />
 
                             <div className="alert alert-success my-3 font-weight-bold">Room is available. Book
                                 now.
@@ -136,7 +145,7 @@ const Details = ({room}) => {
                             <div className="alert alert-danger my-3 font-weight-bold">Login to book room.</div>
 
                             <button className="btn btn-block py-3 booking-btn">
-                                Pay - $100
+                                Pay - ${room.price_per_night}
                             </button>
 
                         </div>

@@ -34,7 +34,7 @@ export const checkBooking = (roomId, checkInDate, checkOutDate) => async (dispat
 
         dispatch({
             type: CHECK_BOOKING_SUCCESS,
-            payload: data.isAvailable
+            payload: data.is_available
         })
 
     } catch (error) {

@@ -4,6 +4,7 @@ import Layout from "./components/layout/Layout";
 import axios from "axios";
 import RoomItem from "../components/room/RoomItem";
 import {useRouter} from "next/router";
+import {useSelector} from "react-redux";
 
 const BACKEND_URL = process.env.BACKEND_URL;
 
@@ -11,6 +12,7 @@ export default function Index({rooms}) {
 
     const router = useRouter();
     let {location, page = 1} = router.query;
+    const {isAuthenticated} = useSelector(state => state.loadedUser);
 
     return (
         <Layout>
@@ -29,7 +31,7 @@ export default function Index({rooms}) {
                         <div className="alert alert-danger mt-5 w-100"><b>No Rooms.</b></div>
                         :
                         rooms && rooms.map(room => (
-                            <RoomItem key={room.id} room={room}/>
+                            <RoomItem key={room.id} room={room} isAuthenticated={isAuthenticated}/>
                         ))
                     }
                 </div>

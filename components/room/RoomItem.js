@@ -2,7 +2,7 @@ import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 
-const RoomItem = ({room}) => {
+const RoomItem = ({room, isAuthenticated}) => {
     return (
         <div className="col-sm-12 col-md-6 col-lg-3 my-3">
             <div className="card p-2">
@@ -24,12 +24,12 @@ const RoomItem = ({room}) => {
                     </h5>
 
                     <div className="ratings mt-auto mb-3">
-                        <p className="card-text"><b>${room.pricePerNight}</b> / night</p>
+                        <p className="card-text"><b>${room.price_per_night}</b> / night</p>
 
                         <div className="rating-outer">
                             <div className="rating-inner" style={{width: `${(room.ratings / 5) * 100}%`}}/>
                         </div>
-                        <span id="no_of_reviews">({room.numOfReviews} Reviews)</span>
+                        <span id="no_of_reviews">(0 Reviews)</span>
                     </div>
 
                     <button className="btn btn-block view-btn">
